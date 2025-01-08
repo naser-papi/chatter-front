@@ -1,0 +1,19 @@
+.auth-page{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    container-type: inline-size;
+    container-name: auth-page;
+    width: 100%;
+}
+@container auth-page (max-width<760px>) {
+    .auth-form{
+        width: 300px;
+    }
+}
+@container auth-page (width > 760px) {
+    .auth-form{
+        width: 500px;
+    }
+}
