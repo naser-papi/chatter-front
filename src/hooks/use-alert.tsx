@@ -4,7 +4,9 @@ import { css } from "@emotion/css";
 
 const useAlert = () => {
   const showAlert = (message: string | string[]) => {
-    const msgSet = new Set(message);
+    const msgSet = Array.isArray(message)
+      ? new Set(message)
+      : new Set([message]);
     const component = (
       <Alert severity="error">
         <AlertTitle>Error</AlertTitle>{" "}

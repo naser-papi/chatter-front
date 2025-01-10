@@ -1,10 +1,11 @@
-import AuthForm from "../components/organism/auth-form.tsx";
-import "./styles.css";
+import { AuthProvider } from "@/hooks";
+import AuthForm from "@/components/template/auth-form";
+
 const AuthPage = () => {
   return (
-    <div className={"auth-page"}>
+    <AuthProvider>
       <AuthForm />
-    </div>
+    </AuthProvider>
   );
 };
 

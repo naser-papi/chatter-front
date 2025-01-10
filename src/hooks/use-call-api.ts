@@ -1,19 +1,32 @@
 import { IAPIInfo } from "../types/base.ts";
 import { mainAPICall } from "../helpers/utils.ts";
-import useAlert from "@/hooks/use-alert.tsx";
+import { useState } from "react";
 
 const useCallApi = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string[] | string>("");
   const callRestAPI = async <T>(info: IAPIInfo): Promise<T | undefined> => {
-    const { showAlert } = useAlert();
-    const resp = await mainAPICall<T>(info);
-    if (resp.isOk) {
-      return resp.data;
-    } else {
-      showAlert(resp.error!);
+    try {
+      setIsLoading(true);
+      setError("");
+      const resp = await mainAPICall<T>(info);
+      if (resp.isOk) {
+        return resp.data;
+      } else {
+        setError(resp.error!);
+      }
+    } catch (err: any) {
+      setError(err.message || "Something went wrong");
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { callRestAPI };
+  return [callRestAPI, isLoading, error] as [
+    typeof callRestAPI,
+    boolean,
+    string,
+  ];
 };
 
 export default useCallApi;
