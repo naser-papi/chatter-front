@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Link } from "@mui/material";
 import { useAuthContext } from "@/hooks";
 
 const RegisterFormActions = () => {
@@ -9,6 +9,7 @@ const RegisterFormActions = () => {
       <Button onClick={doRegister} variant={"contained"}>
         Register
       </Button>
+      <Link href={"/login"}>Login To Account</Link>
     </>
   );
 };

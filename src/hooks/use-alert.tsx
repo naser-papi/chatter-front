@@ -11,8 +11,8 @@ const useAlert = () => {
       <Alert severity="error">
         <AlertTitle>Error</AlertTitle>{" "}
         <ul>
-          {Array.from(msgSet).map((msg) => (
-            <li>{msg}</li>
+          {Array.from(msgSet).map((msg, index) => (
+            <li key={index}>{msg}</li>
           ))}
         </ul>
       </Alert>

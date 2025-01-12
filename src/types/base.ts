@@ -16,3 +16,10 @@ export interface IAPIResponse<T> {
   error?: string;
   isOk: boolean;
 }
+
+export interface IAPIError {
+  message: string | string[];
+  statusCode: number;
+}
+
+export type ErrorType = IAPIError[] | IAPIError | null;

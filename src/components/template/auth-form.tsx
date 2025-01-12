@@ -25,15 +25,25 @@ const AuthForm = () => {
             width: 100%;
             margin-top: 16px;
             display: flex;
+            align-items: center;
+            justify-content: space-between;
             gap: 1rem;
             button {
-              width: 100%;
+              width: 40%;
             }
           }
         }
         @container auth-page (width < 760px) {
           .auth-form {
             width: 300px;
+            .actions-row {
+              flex-wrap: wrap;
+              gap: 2rem;
+              justify-content: center;
+              button {
+                width: 100%;
+              }
+            }
           }
         }
         @container auth-page (width > 760px) {

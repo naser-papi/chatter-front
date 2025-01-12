@@ -1,5 +1,5 @@
-import { IAPIInfo } from "../../types/base.ts";
-import { LoginDto } from "../../dto/auth.ts";
+import { LoginDto } from "@/dto/auth";
+import { IAPIInfo } from "@/types/base";
 
 export const AuthPath = {
   login: {

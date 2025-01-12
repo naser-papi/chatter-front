@@ -1,8 +1,13 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
+import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
+
+const httpLink = createHttpLink({
+  uri: import.meta.env.VITE_BACKEND_URL,
+  credentials: "include",
+});
 
 const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
-  uri: import.meta.env.VITE_BACKEND_URL,
+  link: httpLink,
 });
 
 export default apolloClient;

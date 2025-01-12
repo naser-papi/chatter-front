@@ -8,3 +8,12 @@ export const CREATE_USER = gql`
     }
   }
 `;
+
+export const ME = gql`
+  query {
+    me {
+      id
+      email
+    }
+  }
+`;

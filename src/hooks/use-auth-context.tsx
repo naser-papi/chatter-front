@@ -1,20 +1,19 @@
 import {
-  useContext,
   createContext,
-  useEffect,
-  ReactNode,
-  useState,
   Dispatch,
+  ReactNode,
   SetStateAction,
+  useContext,
+  useEffect,
+  useState,
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useCallApi } from "@/hooks";
-import { AuthPath } from "@/constants";
-import useAlert from "@/hooks/use-alert.tsx";
-import { CreateUserDto, LoginDto } from "@/dto/auth.ts";
-import { useMutation } from "@apollo/client";
+import { useCallApi, useCallMutation } from "@/hooks";
+import { apolloClient, AuthPath } from "@/constants";
+import useAlert from "@/hooks/use-alert";
+import { CreateUserDto } from "@/dto/auth";
 import { CREATE_USER } from "@/constants/graphql-query";
-import { getApolloErrorList } from "@/helpers/utils.ts";
+import { getErrorListFromAPIError } from "@/helpers/utils";
 
 interface AuthContextProps {
   mode: "login" | "register";
@@ -28,7 +27,7 @@ interface AuthContextProps {
   doLogin: () => void;
   doRegister: () => void;
   apiLoading: boolean;
-  apiCallError: string;
+  apiError: string[] | null;
 }
 const AuthContext = createContext({} as AuthContextProps);
 
@@ -42,8 +41,10 @@ export const AuthProvider = ({
   const [mode, setMode] = useState<AuthContextProps["mode"]>("login");
   const [data, setData] = useState<AuthContextProps["data"]>({});
   const [callRestAPi, apiLoading, apiCallError] = useCallApi();
-  const [registerUser, { error: createUserError, loading: createUserLoading }] =
-    useMutation<CreateUserDto, { data: CreateUserDto }>(CREATE_USER);
+  const [registerUser, _, createUserError, createUserLoading] = useCallMutation<
+    CreateUserDto,
+    { data: CreateUserDto }
+  >(CREATE_USER);
   const { showAlert } = useAlert();
   const location = useLocation();
   const navigate = useNavigate();
@@ -54,12 +55,14 @@ export const AuthProvider = ({
   }, [location, location.pathname]);
   useEffect(() => {
     if (apiCallError) {
-      showAlert(apiCallError);
+      const message = getErrorListFromAPIError(apiCallError);
+      showAlert(message);
     }
   }, [apiCallError]);
   useEffect(() => {
     if (createUserError) {
-      showAlert(getApolloErrorList(createUserError));
+      const message = getErrorListFromAPIError(createUserError);
+      showAlert(message);
     }
   }, [createUserError]);
   const validateLoginData = () => {
@@ -87,9 +90,9 @@ export const AuthProvider = ({
       email: data.email!,
       password: data.password!,
     };
-    const resp = await callRestAPi<LoginDto>(apiInfo);
+    const resp = await callRestAPi<{ token: string }>(apiInfo);
     if (resp) {
-      console.log(resp);
+      apolloClient.refetchQueries({ include: "active" });
       navigate("/");
     }
   };
@@ -115,7 +118,10 @@ export const AuthProvider = ({
         data,
         setData,
         doLogin,
-        apiCallError,
+        apiError:
+          (apiCallError && getErrorListFromAPIError(apiCallError)) ||
+          (createUserError && getErrorListFromAPIError(createUserError)) ||
+          null,
         apiLoading: apiLoading || createUserLoading,
         doRegister,
       }}

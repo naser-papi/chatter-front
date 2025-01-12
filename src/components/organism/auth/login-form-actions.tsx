@@ -1,5 +1,6 @@
 import { useAuthContext } from "@/hooks";
 import { LoadingButton } from "@mui/lab";
+import { Link } from "@mui/material";
 
 const LoginFormActions = () => {
   const { doLogin, mode, apiLoading } = useAuthContext();
@@ -15,6 +16,7 @@ const LoginFormActions = () => {
       >
         Login
       </LoadingButton>
+      <Link href={"/register"}>Create New Account</Link>
     </>
   );
 };

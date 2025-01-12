@@ -1,6 +1,27 @@
-import { IAPIInfo, IAPIResponse } from "../types/base.ts";
+import { ErrorType, IAPIInfo, IAPIResponse } from "../types/base.ts";
 import { ApolloError } from "@apollo/client";
 
+export function getErrorListFromAPIError(error: ErrorType) {
+  if (!error) return [];
+  const isArray = Array.isArray(error);
+  const list = isArray ? error.map((err) => err.message) : [error.message];
+  return list.flat();
+}
+
+export function getApolloErrorStatusCode(gqlError: ApolloError): number | null {
+  if (gqlError.networkError && "statusCode" in gqlError.networkError) {
+    const networkErrorStatus = (gqlError.networkError as any).statusCode;
+    return networkErrorStatus as number;
+  }
+  if (gqlError.graphQLErrors && gqlError.graphQLErrors.length > 0) {
+    const error = gqlError.graphQLErrors[0];
+    const { originalError } = error.extensions as {
+      originalError: { statusCode: number; message: string };
+    };
+    return originalError?.statusCode || null;
+  }
+  return null;
+}
 export function getApolloErrorList(error: ApolloError): string[] | string {
   if (error.networkError) {
     return [error.networkError.message];
@@ -24,13 +45,14 @@ export async function coreAPICall(info: IAPIInfo, token = "") {
   const fullURL = import.meta.env.VITE_REST_API_SERVER + "/" + info.url;
   const options = {
     method: info.method,
+    credentials: "include",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
       Authorization: info.tokenLess || !token ? "" : `Bearer ${token}`,
     },
     body: info.method !== "GET" ? JSON.stringify(info.body) : null,
-  };
+  } as RequestInit;
   return await fetch(fullURL, options);
 }
 
@@ -48,9 +70,6 @@ export async function mainAPICall<T>(
       return { status: resp.status, data: {} as T, isOk: true };
     } else {
       const res = await resp.json();
-      if (res.status === 500) {
-        alert("Server Side Error!");
-      }
       return {
         status: res.status,
         error:
