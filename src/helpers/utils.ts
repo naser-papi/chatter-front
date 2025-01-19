@@ -1,5 +1,33 @@
 import { ErrorType, IAPIInfo, IAPIResponse } from "../types/base.ts";
-import { ApolloError } from "@apollo/client";
+import { ApolloError, ReactiveVar } from "@apollo/client";
+
+export function debounce(func: Function, wait: number) {
+  let timeout: number;
+  return function () {
+    //@ts-ignore
+    const context = this;
+    const args = arguments;
+    clearTimeout(timeout);
+    timeout = window.setTimeout(() => func.apply(context, args), wait);
+  };
+}
+
+/**
+ * Generic function to partially update an Apollo reactive variable.
+ *
+ * @param reactiveVar - The Apollo reactive variable created with `makeVar`.
+ * @param updates - A partial update for the reactive variable.
+ */
+export function updateReactiveVar<T>(
+  reactiveVar: ReactiveVar<T>,
+  updates: Partial<T>,
+): void {
+  // Merge the current state of the reactive variable with the updates
+  reactiveVar({
+    ...reactiveVar(), // Spread the current state
+    ...updates, // Apply the updates
+  });
+}
 
 export function getErrorListFromAPIError(error: ErrorType) {
   if (!error) return [];

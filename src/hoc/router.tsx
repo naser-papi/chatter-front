@@ -15,6 +15,10 @@ const router = createBrowserRouter([
     path: "/register",
     element: <AuthPage />,
   },
+  {
+    path: "/chats/:id",
+    element: <HomePage />,
+  },
 ]);
 
 export default router;

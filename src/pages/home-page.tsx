@@ -1,16 +1,16 @@
-import { useCallQuery } from "@/hooks";
-import { ME } from "@/constants/graphql-query";
-import { CreateUserDto } from "@/dto/auth.ts";
 import AppBar from "@/components/template/app-bar";
+import HomeContent from "@/components/template/home-content";
+import MainPageLayout from "@/components/template/main-page-layout";
+import { ChatsProvider } from "@/contexts";
 
 const HomePage = () => {
-  const [data, _, loading] = useCallQuery<CreateUserDto>(ME);
   return (
-    <div>
+    <MainPageLayout>
       <AppBar />
-      {loading && "loading..."}
-      {data?.email}
-    </div>
+      <ChatsProvider>
+        <HomeContent />
+      </ChatsProvider>
+    </MainPageLayout>
   );
 };
 

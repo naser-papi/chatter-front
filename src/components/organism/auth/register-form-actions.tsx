@@ -1,8 +1,9 @@
+import { useContext } from "react";
 import { Button, Link } from "@mui/material";
-import { useAuthContext } from "@/hooks";
+import { AuthContext } from "@/contexts";
 
 const RegisterFormActions = () => {
-  const { doRegister, mode } = useAuthContext();
+  const { doRegister, mode } = useContext(AuthContext);
   if (mode !== "register") return null;
   return (
     <>

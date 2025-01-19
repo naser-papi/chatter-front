@@ -1,4 +1,4 @@
-import { AuthProvider } from "@/hooks";
+import { AuthProvider } from "@/contexts";
 import AuthForm from "@/components/template/auth-form";
 
 const AuthPage = () => {

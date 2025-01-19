@@ -3,15 +3,13 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
-  useContext,
   useEffect,
   useState,
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useCallApi, useCallMutation } from "@/hooks";
+import { useAlert, useCallApi, useCallMutation } from "@/hooks";
 import { apolloClient, AuthPath } from "@/constants";
-import useAlert from "@/hooks/use-alert";
-import { CreateUserDto } from "@/dto/auth";
+import { CreateUserDto } from "@/dto/auth.ts";
 import { CREATE_USER } from "@/constants/graphql-query";
 import { getErrorListFromAPIError } from "@/helpers/utils";
 
@@ -29,9 +27,8 @@ interface AuthContextProps {
   apiLoading: boolean;
   apiError: string[] | null;
 }
-const AuthContext = createContext({} as AuthContextProps);
 
-export const useAuthContext = () => useContext(AuthContext);
+export const AuthContext = createContext({} as AuthContextProps);
 
 export const AuthProvider = ({
   children,
@@ -52,33 +49,37 @@ export const AuthProvider = ({
   useEffect(() => {
     //set mode by current url
     setMode(location.pathname === "/login" ? "login" : "register");
+    doLogout();
   }, [location, location.pathname]);
   useEffect(() => {
     if (apiCallError) {
       const message = getErrorListFromAPIError(apiCallError);
-      showAlert(message);
+      showAlert(message, "error");
     }
   }, [apiCallError]);
   useEffect(() => {
     if (createUserError) {
       const message = getErrorListFromAPIError(createUserError);
-      showAlert(message);
+      showAlert(message, "error");
     }
   }, [createUserError]);
   const validateLoginData = () => {
     if (!data.email || !data.password) {
-      showAlert("Please enter email and password");
+      showAlert("Please enter email and password", "error");
       return false;
     }
     return true;
   };
   const validateRegisterData = () => {
     if (!data.name || !data.email || !data.password || !data.repeatPassword) {
-      showAlert("Please enter name, email, password and repeat password");
+      showAlert(
+        "Please enter name, email, password and repeat password",
+        "error",
+      );
       return false;
     }
     if (data.password !== data.repeatPassword) {
-      showAlert("Passwords do not match");
+      showAlert("Passwords do not match", "error");
       return false;
     }
     return true;
@@ -93,6 +94,7 @@ export const AuthProvider = ({
     const resp = await callRestAPi<{ token: string }>(apiInfo);
     if (resp) {
       apolloClient.refetchQueries({ include: "active" });
+      showAlert("Login successful", "success");
       navigate("/");
     }
   };
@@ -110,7 +112,10 @@ export const AuthProvider = ({
 
     navigate("/login");
   };
-
+  const doLogout = async () => {
+    const apiInfo = AuthPath.logout;
+    await callRestAPi(apiInfo);
+  };
   return (
     <AuthContext.Provider
       value={{

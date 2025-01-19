@@ -1,8 +1,9 @@
 import { TextField } from "@mui/material";
-import { useAuthContext } from "@/hooks";
+import { AuthContext } from "@/contexts";
+import { useContext } from "react";
 
 const RegisterForm = () => {
-  const { setData, mode, data } = useAuthContext();
+  const { setData, mode, data } = useContext(AuthContext);
   if (mode !== "register") return null;
   return (
     <>

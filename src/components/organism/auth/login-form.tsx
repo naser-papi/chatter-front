@@ -1,8 +1,9 @@
+import { useContext } from "react";
 import { TextField } from "@mui/material";
-import { useAuthContext } from "@/hooks";
+import { AuthContext } from "@/contexts";
 
 const LoginForm = () => {
-  const { setData, mode, data } = useAuthContext();
+  const { setData, mode, data } = useContext(AuthContext);
   if (mode !== "login") return null;
   return (
     <>

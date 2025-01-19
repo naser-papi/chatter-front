@@ -10,4 +10,8 @@ export const AuthPath = {
       password: "",
     } as LoginDto,
   },
+  logout: {
+    url: "auth/logout",
+    method: "POST",
+  },
 } satisfies { [key: string]: IAPIInfo };

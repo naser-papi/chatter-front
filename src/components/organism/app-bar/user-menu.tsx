@@ -1,21 +1,23 @@
+import { MouseEvent, useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
-import { MouseEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { UserPages } from "@/constants/base";
 
 const UserMenu = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-
+  const navigate = useNavigate();
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
   return (
     <>
       <Tooltip title="Open settings">
@@ -40,7 +42,13 @@ const UserMenu = () => {
         onClose={handleCloseUserMenu}
       >
         {UserPages.map((page, index) => (
-          <MenuItem key={index} onClick={handleCloseUserMenu}>
+          <MenuItem
+            key={index}
+            onClick={() => {
+              handleCloseUserMenu();
+              navigate(page.href);
+            }}
+          >
             <Typography sx={{ textAlign: "center" }}>{page.title}</Typography>
           </MenuItem>
         ))}

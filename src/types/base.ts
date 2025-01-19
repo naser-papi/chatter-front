@@ -23,3 +23,5 @@ export interface IAPIError {
 }
 
 export type ErrorType = IAPIError[] | IAPIError | null;
+
+export type AlertType = "success" | "error" | "info" | "warning";

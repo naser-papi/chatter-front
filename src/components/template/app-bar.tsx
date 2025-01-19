@@ -12,17 +12,19 @@ import { css } from "@emotion/css";
 function ResponsiveAppBar() {
   return (
     <AppBar
+      position="relative"
       className={css`
-        position: static;
         container-type: inline-size;
         container-name: app-bar;
         margin: 0 auto;
         padding: 0 1rem;
+        max-height: 70px;
 
         .branding {
           display: flex;
           align-items: center;
           gap: 8px;
+          flex-shrink: 0;
 
           .brand-name {
             margin-right: 2rem; /* Equivalent to mr: 2 */
@@ -52,9 +54,12 @@ function ResponsiveAppBar() {
           margin-left: auto;
         }
 
-        @container app-bar (width < 680px) {
+        @container app-bar (width <= 720px) {
           .branding {
-            display: none;
+            position: absolute;
+            inset: 0 50%;
+            transform: translateX(-50%);
+            width: 170px;
           }
         }
         @container app-bar (width>720px) {

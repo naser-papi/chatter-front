@@ -1,21 +1,28 @@
 import ReactDOM from "react-dom/client";
-import { Alert, AlertTitle } from "@mui/material";
+import { Alert, AlertTitle, Snackbar } from "@mui/material";
 import { css } from "@emotion/css";
+import { AlertType } from "@/types/base.ts";
 
 const useAlert = () => {
-  const showAlert = (message: string | string[]) => {
+  const showAlert = (message: string | string[], type: AlertType) => {
     const msgSet = Array.isArray(message)
       ? new Set(message)
       : new Set([message]);
     const component = (
-      <Alert severity="error">
-        <AlertTitle>Error</AlertTitle>{" "}
-        <ul>
-          {Array.from(msgSet).map((msg, index) => (
-            <li key={index}>{msg}</li>
-          ))}
-        </ul>
-      </Alert>
+      <Snackbar
+        key={type}
+        open={true}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+      >
+        <Alert severity={type}>
+          <AlertTitle>{type.toUpperCase()}</AlertTitle>{" "}
+          <ul>
+            {Array.from(msgSet).map((msg, index) => (
+              <li key={index}>{msg}</li>
+            ))}
+          </ul>
+        </Alert>
+      </Snackbar>
     );
 
     const div = document.createElement("div");
@@ -23,7 +30,7 @@ const useAlert = () => {
       position: fixed;
       top: 0;
       left: 0;
-      z-index: 1000;
+      z-index: 9999;
       width: 100vw;
       padding: 16px;
       [role="alert"] {
