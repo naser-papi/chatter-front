@@ -1,13 +1,30 @@
-import { useContext } from "react";
-import { ChatItem } from "@/components/molecule";
+import { useContext, useEffect } from "react";
+import { ChatItem, Loading } from "@/components/molecule";
 import { Divider } from "@mui/material";
 import { ChatsContext } from "@/contexts";
+import { useAlert, useCallQuery } from "@/hooks";
+import { ChatListDto } from "@/dto/chat";
+import { CHATS } from "@/constants/graphql-query";
+import { getErrorListFromAPIError } from "@/helpers/utils";
+import EmptyBox from "@/components/molecule/empty-box";
 
 const ChatList = () => {
-  const { list, onChatItemClick } = useContext(ChatsContext);
+  const { onChatItemClick } = useContext(ChatsContext);
+  const [chatList, listError, listPending] = useCallQuery<ChatListDto, {}>(
+    CHATS,
+  );
+  const { showAlert } = useAlert();
+  useEffect(() => {
+    if (listError) {
+      const message = getErrorListFromAPIError(listError);
+      showAlert(message, "error");
+    }
+  }, [listError]);
   return (
     <>
-      {list.map((chat) => (
+      <Loading show={listPending} />
+      <EmptyBox show={!chatList || chatList.chats.length === 0} />
+      {chatList?.chats.map((chat) => (
         <>
           <ChatItem
             key={chat.id}

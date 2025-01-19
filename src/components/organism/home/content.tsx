@@ -2,9 +2,12 @@ import { useCallQuery } from "@/hooks";
 import { ME } from "@/constants/graphql-query";
 
 const Content = () => {
-  const [data, _, loading] = useCallQuery<{
-    me: { email: string; id: string };
-  }>(ME);
+  const [data, _, loading] = useCallQuery<
+    {
+      me: { email: string; id: string };
+    },
+    {}
+  >(ME);
   return (
     <div>
       {loading && "loading..."}

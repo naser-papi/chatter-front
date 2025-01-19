@@ -8,7 +8,7 @@ interface ChatterModalProps {
   title: string;
   children: JSX.Element | JSX.Element[];
   onClose: () => void;
-  onSubmit: () => void;
+  onSubmit: () => Promise<void>;
   className?: string;
 }
 

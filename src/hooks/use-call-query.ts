@@ -1,16 +1,21 @@
-import { useQuery } from "@apollo/client";
+import { OperationVariables, useQuery } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { DocumentNode } from "graphql/language";
 import { useEffect, useState } from "react";
-import type { ErrorType } from "@/types/base.ts";
-import {
-  getApolloErrorList,
-  getApolloErrorStatusCode,
-} from "@/helpers/utils.ts";
+import type { ErrorType } from "@/types/base";
+import { getApolloErrorList, getApolloErrorStatusCode } from "@/helpers/utils";
 import { apolloClient } from "@/constants";
 
-const useCallQuery = <TData>(query: DocumentNode) => {
-  const { data, error: gqlError, loading } = useQuery<TData>(query);
+const useCallQuery = <TData, TVariables extends OperationVariables>(
+  query: DocumentNode,
+  variables?: TVariables,
+  skip = false,
+) => {
+  const {
+    data,
+    error: gqlError,
+    loading,
+  } = useQuery<TData>(query, { variables, skip });
   const [error, setError] = useState<ErrorType>(null);
   const navigate = useNavigate();
   useEffect(() => {

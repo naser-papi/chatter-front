@@ -1,8 +1,9 @@
 import { Button, Divider, Stack } from "@mui/material";
 import { css } from "@emotion/css";
+import { useState } from "react";
 
 interface ModalFooterActionsProps {
-  onSubmit: () => void;
+  onSubmit: () => Promise<void>;
   onCancel: () => void;
 }
 
@@ -10,6 +11,13 @@ const ModalFooterActions = ({
   onSubmit,
   onCancel,
 }: ModalFooterActionsProps) => {
+  const [loading, setLoading] = useState(false);
+
+  const onSubmitHandler = async () => {
+    setLoading(true);
+    await onSubmit();
+    setLoading(false);
+  };
   return (
     <Stack
       spacing={1}
@@ -29,7 +37,13 @@ const ModalFooterActions = ({
           justify-content: space-between;
         `}
       >
-        <Button color={"success"} variant={"outlined"} onClick={onSubmit}>
+        <Button
+          color={"success"}
+          variant={"outlined"}
+          onClick={onSubmitHandler}
+          loadingPosition={"end"}
+          loading={loading}
+        >
           Submit
         </Button>
         <Button onClick={onCancel}>Cancel</Button>

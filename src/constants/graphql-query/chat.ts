@@ -23,9 +23,11 @@ export const CHATS = gql`
 `;
 
 export const CHAT = gql`
-    query($id: ID!) {
-        chat(id: $id) {
-            isPrivate
-            name
-            id
+  query Query($id: String!) {
+    chat(id: $id) {
+      isPrivate
+      name
+      id
+    }
+  }
 `;
