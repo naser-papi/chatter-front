@@ -1,11 +1,12 @@
+import { useEffect } from "react";
+import { Stack } from "@mui/material";
+import { useParams } from "react-router-dom";
 import { useAlert, useCallQuery } from "@/hooks";
 import { ChatDto } from "@/dto/chat";
 import { CHAT } from "@/constants/graphql-query";
-import { useParams } from "react-router-dom";
-import { Loading } from "@/components/molecule";
-import EmptyBox from "@/components/molecule/empty-box";
-import { useEffect } from "react";
+import { EmptyBox, Loading } from "@/components/molecule";
 import { getErrorListFromAPIError } from "@/helpers/utils";
+import ChatMessageBox from "./chat-message-box";
 
 const ChatContent = () => {
   const { id: routeParamId } = useParams();
@@ -23,14 +24,19 @@ const ChatContent = () => {
   }, [chatByIdError]);
 
   return (
-    <>
+    <Stack className={"chat-content"}>
       <Loading show={chatByIdPending} />
       <EmptyBox
         show={!routeParamId}
         message={"Please Select a Chat form list"}
       />
-      {chatById && <div>{JSON.stringify(chatById)}</div>}
-    </>
+      {chatById && (
+        <>
+          <h2>{chatById.chat.name}</h2>
+          <ChatMessageBox />
+        </>
+      )}
+    </Stack>
   );
 };
 

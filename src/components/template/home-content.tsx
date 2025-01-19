@@ -28,6 +28,23 @@ const HomeContent = () => {
           background: #202020;
           container-type: inline-size;
           container-name: home-content;
+
+          .chat-content {
+            height: 100%;
+            padding: 1rem;
+
+            .chat-message-box {
+              margin-top: auto;
+              padding: 0.5rem;
+              width: 100%;
+              display: flex;
+              align-items: center;
+
+              .chat-message-text {
+                width: 100%;
+              }
+            }
+          }
         `}
       >
         <ChatBox />
