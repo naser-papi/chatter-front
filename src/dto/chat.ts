@@ -20,8 +20,8 @@ export interface ChatDto {
 
 export interface MessageDto {
   content: string;
-  userId: string;
-  createdAt: Date;
+  chatId: string;
+  userId?: string;
+  createdAt?: Date;
   id?: string;
-  chatId?: string;
 }
