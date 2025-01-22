@@ -11,12 +11,31 @@ const HomeContent = () => {
           .add-chat-modal {          
             [role="chatter-modal-body"] {            
               width:480px;                                                             
-          }          
-          .add-chat-form{
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            }          
+            .add-chat-form{
+              display: flex;
+              flex-direction: column;
+              gap: 1rem;
+            }   
           }
+          .scrollbar-dark {
+            scrollbar-width: thin;
+            scrollbar-color: #555 #202020;
+          
+            &::-webkit-scrollbar {
+              width: 8px;
+              height: 8px;
+            }
+          
+            &::-webkit-scrollbar-thumb {
+              background-color: #555;
+              border-radius: 4px;
+            }
+          
+            &::-webkit-scrollbar-track {
+              background-color: #202020;
+            }
+          }                      
         `}
       />
       <div
