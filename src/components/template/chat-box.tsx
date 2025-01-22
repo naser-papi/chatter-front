@@ -11,13 +11,13 @@ const ChatBox = () => {
           width: 100%;
           height: 100%;
           background: rgba(5, 1, 0, 0.99);
-          max-height: 100%;
+          max-height: calc(100% - 1px);
           overflow-y: auto;
         `,
         "scrollbar-dark",
       )}
     >
-      <Toolbar>
+      <Toolbar className={"toolbar"}>
         <AddChatButton />
       </Toolbar>
       <Divider />

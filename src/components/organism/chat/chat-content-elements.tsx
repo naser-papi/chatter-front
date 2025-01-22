@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { Stack } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useAlert, useCallQuery } from "@/hooks";
 import { ChatDto } from "@/dto/chat";
@@ -7,9 +6,9 @@ import { CHAT } from "@/constants/graphql-query";
 import { EmptyBox, Loading } from "@/components/molecule";
 import { getErrorListFromAPIError } from "@/helpers/utils";
 import ChatMessageBox from "./chat-message-box";
-import MessageList from "@/components/organism/chat/message-list";
+import MessageList from "./message-list";
 
-const ChatContent = () => {
+const ChatContentElements = () => {
   const { id: routeParamId } = useParams();
   const { showAlert } = useAlert();
   const [chatById, chatByIdError, chatByIdLoading] = useCallQuery<
@@ -25,7 +24,7 @@ const ChatContent = () => {
   }, [chatByIdError]);
 
   return (
-    <Stack className={"chat-content"}>
+    <>
       <Loading show={chatByIdLoading} />
       <EmptyBox
         show={!routeParamId}
@@ -33,13 +32,15 @@ const ChatContent = () => {
       />
       {chatById && (
         <>
-          <h2>{chatById.chat.name}</h2>
+          <header>
+            <h2>{chatById.chat.name}</h2>
+          </header>
           <MessageList />
           <ChatMessageBox />
         </>
       )}
-    </Stack>
+    </>
   );
 };
 
-export default ChatContent;
+export default ChatContentElements;

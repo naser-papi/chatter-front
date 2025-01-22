@@ -11,6 +11,7 @@ const MainPageLayout = ({
         display: grid;
         grid-template-rows: auto 1fr;
         height: 100%;
+        padding-bottom: 0.5rem;
       `}
     >
       {children}

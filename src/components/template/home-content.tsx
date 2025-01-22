@@ -1,7 +1,8 @@
 import { css } from "@emotion/css";
 import { css as globalCss, Global } from "@emotion/react";
-import { AddChatModal, ChatContent } from "@/components/organism/chat";
+import { AddChatModal } from "@/components/organism/chat";
 import ChatBox from "./chat-box";
+import ChatContent from "./chat-content";
 
 const HomeContent = () => {
   return (
@@ -41,30 +42,15 @@ const HomeContent = () => {
       <div
         className={css`
           display: grid;
-          grid-template-columns: 1fr 3fr;
           overflow: hidden;
+          grid-template-columns: 1fr 3fr;
           width: 100%;
+          height: 100%;
+          box-sizing: border-box;
           align-items: start;
           background: #202020;
           container-type: inline-size;
           container-name: home-content;
-
-          .chat-content {
-            height: 100%;
-            padding: 1rem;
-
-            .chat-message-box {
-              margin-top: auto;
-              padding: 0.5rem;
-              width: 100%;
-              display: flex;
-              align-items: center;
-
-              .chat-message-text {
-                width: 100%;
-              }
-            }
-          }
         `}
       >
         <ChatBox />

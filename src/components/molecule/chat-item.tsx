@@ -12,6 +12,7 @@ interface ChatItemProps {
   title: string;
   onClick: () => void;
   time?: string;
+  selected?: boolean;
 }
 
 const ChatItem = ({
@@ -20,11 +21,12 @@ const ChatItem = ({
   avatar,
   title,
   onClick,
+  selected,
 }: ChatItemProps) => {
   return (
     <>
       <ListItem alignItems="flex-start" disablePadding>
-        <ListItemButton onClick={onClick}>
+        <ListItemButton onClick={onClick} selected={selected}>
           <ListItemAvatar>
             <Avatar alt="Remy Sharp" src={avatar} />
           </ListItemAvatar>

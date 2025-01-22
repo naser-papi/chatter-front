@@ -1,5 +1,5 @@
 import { createContext, useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface ChatsContextProps {
   showAddModal: boolean;
@@ -19,8 +19,11 @@ export const ChatsContext = createContext<ChatsContextProps>(
 
 export const ChatsProvider = ({ children }: ChatsProviderProps) => {
   const navigate = useNavigate();
+  const { id: chatIdParam } = useParams();
   const [showAddModal, setShowAddModal] = useState(false);
-  const [currentChatId, setCurrentChatId] = useState<string | null>(null);
+  const [currentChatId, setCurrentChatId] = useState<string | null>(
+    chatIdParam as string,
+  );
 
   const onShowAddModal = useCallback(async () => {
     setShowAddModal(true);

@@ -1,10 +1,11 @@
 import { useContext, useEffect } from "react";
+import Box from "@mui/material/Box";
 import { ChatsContext } from "@/contexts";
 import { useAlert, useCallQuery } from "@/hooks";
 import { MessageDto } from "@/dto/chat";
 import { GET_MESSAGES } from "@/constants/graphql-query";
 import { getErrorListFromAPIError } from "@/helpers/utils";
-import { Loading } from "@/components/molecule";
+import { Loading, Message } from "@/components/molecule";
 
 const MessageList = () => {
   const { currentChatId } = useContext(ChatsContext);
@@ -27,10 +28,17 @@ const MessageList = () => {
   }, [messagesError]);
   if (!currentChatId) return null;
   return (
-    <div className={"message-list"}>
+    <Box className={"message-list"}>
       <Loading show={messagesLoading} />
-      {messages?.messages.map((msg) => <div key={msg.id}>{msg.content}</div>)}
-    </div>
+      {messages?.messages.map((msg) => (
+        <Message
+          key={msg.id}
+          content={msg.content}
+          createdAt={msg.createdAt}
+          id={msg.id}
+        />
+      ))}
+    </Box>
   );
 };
 

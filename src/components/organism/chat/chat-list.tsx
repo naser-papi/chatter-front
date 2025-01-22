@@ -9,7 +9,7 @@ import { getErrorListFromAPIError } from "@/helpers/utils";
 import EmptyBox from "@/components/molecule/empty-box";
 
 const ChatList = () => {
-  const { onChatItemClick } = useContext(ChatsContext);
+  const { onChatItemClick, currentChatId } = useContext(ChatsContext);
   const [chatList, listError, listPending] = useCallQuery<ChatListDto, {}>(
     CHATS,
   );
@@ -24,19 +24,22 @@ const ChatList = () => {
     <>
       <Loading show={listPending} />
       <EmptyBox show={!chatList || chatList.chats.length === 0} />
-      {chatList?.chats.map((chat) => (
-        <>
-          <ChatItem
-            key={chat.id}
-            onClick={() => onChatItemClick(chat.id!)}
-            message={"msg"}
-            sender={"sender"}
-            avatar={"NP"}
-            title={chat.name || "title"}
-          />
-          <Divider variant="inset" component="li" />
-        </>
-      ))}
+      {chatList?.chats
+        .map((chat) => (
+          <>
+            <ChatItem
+              key={chat.id}
+              onClick={() => onChatItemClick(chat.id!)}
+              message={"msg"}
+              sender={"sender"}
+              avatar={"NP"}
+              title={chat.name || "title"}
+              selected={currentChatId === chat.id}
+            />
+            <Divider variant="inset" component="li" />
+          </>
+        ))
+        ?.reverse()}
     </>
   );
 };
