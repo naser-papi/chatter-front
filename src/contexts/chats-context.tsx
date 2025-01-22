@@ -6,6 +6,7 @@ interface ChatsContextProps {
   onShowAddModal: () => void;
   onCancelNewChat: () => void;
   onChatItemClick: (id: string) => void;
+  currentChatId: string | null;
 }
 
 interface ChatsProviderProps {
@@ -19,6 +20,7 @@ export const ChatsContext = createContext<ChatsContextProps>(
 export const ChatsProvider = ({ children }: ChatsProviderProps) => {
   const navigate = useNavigate();
   const [showAddModal, setShowAddModal] = useState(false);
+  const [currentChatId, setCurrentChatId] = useState<string | null>(null);
 
   const onShowAddModal = useCallback(async () => {
     setShowAddModal(true);
@@ -28,6 +30,7 @@ export const ChatsProvider = ({ children }: ChatsProviderProps) => {
   }, []);
 
   const onChatItemClick = useCallback((id: string) => {
+    setCurrentChatId(id);
     navigate(`/chats/${id}`);
   }, []);
   return (
@@ -37,6 +40,7 @@ export const ChatsProvider = ({ children }: ChatsProviderProps) => {
         onShowAddModal,
         onCancelNewChat,
         onChatItemClick,
+        currentChatId,
       }}
     >
       {children}

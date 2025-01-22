@@ -9,6 +9,8 @@ const ChatBox = () => {
         width: 100%;
         height: 100%;
         background: rgba(5, 1, 0, 0.99);
+        max-height: 100%;
+        overflow-y: auto;
       `}
     >
       <Toolbar>

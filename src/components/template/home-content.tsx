@@ -23,6 +23,7 @@ const HomeContent = () => {
         className={css`
           display: grid;
           grid-template-columns: 1fr 3fr;
+          overflow: hidden;
           width: 100%;
           align-items: start;
           background: #202020;

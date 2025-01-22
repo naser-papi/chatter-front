@@ -7,11 +7,12 @@ import { CHAT } from "@/constants/graphql-query";
 import { EmptyBox, Loading } from "@/components/molecule";
 import { getErrorListFromAPIError } from "@/helpers/utils";
 import ChatMessageBox from "./chat-message-box";
+import MessageList from "@/components/organism/chat/message-list";
 
 const ChatContent = () => {
   const { id: routeParamId } = useParams();
   const { showAlert } = useAlert();
-  const [chatById, chatByIdError, chatByIdPending] = useCallQuery<
+  const [chatById, chatByIdError, chatByIdLoading] = useCallQuery<
     ChatDto,
     { id: string }
   >(CHAT, { id: routeParamId || "" }, !routeParamId);
@@ -25,7 +26,7 @@ const ChatContent = () => {
 
   return (
     <Stack className={"chat-content"}>
-      <Loading show={chatByIdPending} />
+      <Loading show={chatByIdLoading} />
       <EmptyBox
         show={!routeParamId}
         message={"Please Select a Chat form list"}
@@ -33,6 +34,7 @@ const ChatContent = () => {
       {chatById && (
         <>
           <h2>{chatById.chat.name}</h2>
+          <MessageList />
           <ChatMessageBox />
         </>
       )}

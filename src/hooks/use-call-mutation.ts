@@ -1,19 +1,19 @@
 import { DocumentNode } from "graphql/language";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { MutationHookOptions, useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
 import type { ErrorType } from "@/types/base";
-import {
-  getApolloErrorList,
-  getApolloErrorStatusCode,
-} from "@/helpers/utils.ts";
+import { getApolloErrorList, getApolloErrorStatusCode } from "@/helpers/utils";
 import { apolloClient } from "@/constants";
 
-const useCallMutation = <TData, TVar>(query: DocumentNode) => {
+const useCallMutation = <TData, TVar>(
+  query: DocumentNode,
+  options?: MutationHookOptions<TData, TVar>,
+) => {
   const [callMutation, { data, error: gqlError, loading }] = useMutation<
     TData,
     TVar
-  >(query);
+  >(query, options);
   const [error, setError] = useState<ErrorType>(null);
   const navigate = useNavigate();
 

@@ -1,4 +1,4 @@
-import { BaseDto } from "./base.ts";
+import { BaseDto } from "./base";
 
 export interface CreateUserDto extends BaseDto {
   email: string;

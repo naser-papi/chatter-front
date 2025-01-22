@@ -5,7 +5,7 @@ import ChatterModal from "@/components/molecule/chatter-modal";
 import { ChatsContext } from "@/contexts";
 import { useAlert, useCallMutation } from "@/hooks";
 import { ChatItemDto, CreateChatDto } from "@/dto/chat";
-import { CREATE_CHAT } from "@/constants/graphql-query";
+import { CHATS, CREATE_CHAT } from "@/constants/graphql-query";
 import { getErrorListFromAPIError } from "@/helpers/utils";
 
 const AddChatModal = () => {
@@ -14,7 +14,27 @@ const AddChatModal = () => {
   const [createChat, createdChat, createError] = useCallMutation<
     CreateChatDto,
     { data: ChatItemDto }
-  >(CREATE_CHAT);
+  >(CREATE_CHAT, {
+    update(cache, { data }) {
+      if (data?.createChat) {
+        const newChat = data.createChat;
+
+        // Read the existing chats from the cache
+        const existingChats: any = cache.readQuery({
+          query: CHATS,
+        });
+
+        // Update the cache with the new chat
+        cache.writeQuery({
+          query: CHATS,
+          data: {
+            ...existingChats,
+            chats: [newChat, ...existingChats.chats], // Prepend or append as needed
+          },
+        });
+      }
+    },
+  });
 
   const { showAlert } = useAlert();
 

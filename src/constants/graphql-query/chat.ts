@@ -31,3 +31,25 @@ export const CHAT = gql`
     }
   }
 `;
+
+export const SEND_MESSAGE = gql`
+  mutation Mutation($data: CreateMessageInput!) {
+    createMessage(data: $data) {
+      content
+      userId
+      createAt
+      id
+    }
+  }
+`;
+
+export const GET_MESSAGES = gql`
+  query Query($chatId: String!) {
+    messages(chatId: $chatId) {
+      content
+      userId
+      createAt
+      id
+    }
+  }
+`;
