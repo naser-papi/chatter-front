@@ -1,5 +1,33 @@
-import { ErrorType, IAPIInfo, IAPIResponse } from "../types/base.ts";
+import { ErrorType, IAPIInfo, IAPIResponse } from "@/types/base";
 import { ApolloError, ReactiveVar } from "@apollo/client";
+
+export function formatMessageDateTime(fullDate?: Date | string): string {
+  let date: Date | null = null;
+  if (typeof fullDate === "string") {
+    date = new Date(fullDate);
+  }
+  if (!date) return "";
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const day = date.getDate();
+  const year = date.getFullYear();
+  const month = months[date.getMonth()];
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  return `${month} ${day} ${year} - ${hours}:${minutes}`;
+}
 
 export function debounce(func: Function, wait: number) {
   let timeout: number;

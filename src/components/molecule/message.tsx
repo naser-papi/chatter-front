@@ -1,16 +1,17 @@
 import { MessageDto } from "@/dto/chat";
 import Grid from "@mui/material/Grid2";
-
+import { forwardRef } from "react";
 import Avatar from "@mui/material/Avatar";
 import { Paper, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import { formatMessageDateTime } from "@/helpers/utils";
 
 interface MessageProps
-  extends Pick<MessageDto, "id" | "content" | "createdAt"> {}
+  extends Pick<MessageDto, "id" | "content" | "createAt"> {}
 
-const Message = ({ content, createdAt }: MessageProps) => {
+const Message = forwardRef(({ content, createAt }: MessageProps, ref) => {
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} ref={ref}>
       <Grid size={1}>
         <Avatar src={""} sx={{ width: 42, height: 42 }} />
       </Grid>
@@ -20,12 +21,12 @@ const Message = ({ content, createdAt }: MessageProps) => {
             <Typography sx={{ padding: "0.9rem" }}>{content}</Typography>
           </Paper>
           <Typography variant={"caption"}>
-            {createdAt?.toLocaleString()}
+            {formatMessageDateTime(createAt)}
           </Typography>
         </Stack>
       </Grid>
     </Grid>
   );
-};
+});
 
 export default Message;
