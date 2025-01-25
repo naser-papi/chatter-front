@@ -2,10 +2,11 @@ import { useContext, useEffect, useState } from "react";
 import { Divider, IconButton, InputBase, Paper } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import { useAlert, useCallMutation } from "@/hooks";
-import { GET_MESSAGES, SEND_MESSAGE } from "@/constants/graphql-query";
+import { SEND_MESSAGE } from "@/constants/graphql-query";
 import { MessageDto } from "@/dto/chat";
 import { ChatsContext } from "@/contexts";
 import { getErrorListFromAPIError } from "@/helpers/utils";
+import { updateMessagesCache } from "@/helpers/messages";
 
 interface ChatMessageBoxProps {
   text?: string;
@@ -21,29 +22,8 @@ const ChatMessageBox = ({ text = "" }: ChatMessageBoxProps) => {
   >(SEND_MESSAGE, {
     update(cache, { data }) {
       if ((data as any)?.createMessage) {
-        const newMessage = (data as any).createMessage;
-
-        // Read the existing messages from the cache for the current chat
-        const existingMessages: any = cache.readQuery({
-          query: GET_MESSAGES,
-          variables: {
-            chatId: currentChatId,
-          },
-        });
-
-        // Update the cache with the new message
-        if (existingMessages) {
-          cache.writeQuery({
-            query: GET_MESSAGES,
-            variables: {
-              chatId: currentChatId,
-            },
-            data: {
-              ...existingMessages,
-              messages: [...existingMessages.messages, newMessage], // Append the new message
-            },
-          });
-        }
+        const newMessage: MessageDto = (data as any).createMessage;
+        updateMessagesCache(cache, newMessage);
       }
     },
   });
