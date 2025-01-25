@@ -22,6 +22,6 @@ export interface MessageDto {
   content: string;
   chatId: string;
   userId?: string;
-  createAt?: Date;
+  createAt?: string;
   id?: string;
 }

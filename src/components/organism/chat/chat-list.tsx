@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { Fragment, useContext, useEffect } from "react";
 import { ChatItem, Loading } from "@/components/molecule";
 import { Divider } from "@mui/material";
 import { ChatsContext } from "@/contexts";
@@ -26,9 +26,8 @@ const ChatList = () => {
       <EmptyBox show={!chatList || chatList.chats.length === 0} />
       {chatList?.chats
         .map((chat) => (
-          <>
+          <Fragment key={chat.id}>
             <ChatItem
-              key={chat.id}
               onClick={() => onChatItemClick(chat.id!)}
               message={"msg"}
               sender={"sender"}
@@ -37,7 +36,7 @@ const ChatList = () => {
               selected={currentChatId === chat.id}
             />
             <Divider variant="inset" component="li" />
-          </>
+          </Fragment>
         ))
         ?.reverse()}
     </>

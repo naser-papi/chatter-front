@@ -17,6 +17,7 @@ const useCallSubscription = <TData, TVariables extends OperationVariables>(
   useEffect(() => {
     if (gqlError) {
       console.log(gqlError);
+      setError(null);
     }
   }, [gqlError]);
 

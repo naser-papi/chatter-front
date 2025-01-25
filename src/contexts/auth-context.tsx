@@ -9,7 +9,7 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAlert, useCallApi, useCallMutation } from "@/hooks";
 import { apolloClient, AuthPath } from "@/constants";
-import { CreateUserDto } from "@/dto/auth.ts";
+import { CreateUserDto } from "@/dto/auth";
 import { CREATE_USER } from "@/constants/graphql-query";
 import { getErrorListFromAPIError } from "@/helpers/utils";
 
