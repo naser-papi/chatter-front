@@ -1,15 +1,19 @@
 import { useContext, useEffect, useRef } from "react";
 import Box from "@mui/material/Box";
 import { ChatsContext } from "@/contexts";
-import { useAlert, useCallQuery } from "@/hooks";
+import { useAlert, useCallQuery, useCallSubscription } from "@/hooks";
 import { MessageDto } from "@/dto/chat";
-import { GET_MESSAGES } from "@/constants/graphql-query";
+import { GET_MESSAGES, ON_MESSAGE_CREATED } from "@/constants/graphql-query";
 import { getErrorListFromAPIError } from "@/helpers/utils";
 import { Loading, Message } from "@/components/molecule";
 
 const MessageList = () => {
   const { currentChatId } = useContext(ChatsContext);
   const { showAlert } = useAlert();
+  const [newMessages] = useCallSubscription<
+    { onMessageCreated: MessageDto },
+    { chatId: string }
+  >(ON_MESSAGE_CREATED, { chatId: currentChatId || "" });
   const listRef = useRef<HTMLDivElement>(null);
   const [messages, messagesError, messagesLoading] = useCallQuery<
     { messages: MessageDto[] },
@@ -21,6 +25,9 @@ const MessageList = () => {
     },
     !currentChatId,
   );
+  useEffect(() => {
+    console.log(">>>", newMessages);
+  }, [newMessages]);
   useEffect(() => {
     if (messagesError) {
       const err = getErrorListFromAPIError(messagesError);

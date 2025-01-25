@@ -1,5 +1,17 @@
 import { gql } from "@apollo/client";
 
+export const ON_MESSAGE_CREATED = gql`
+  subscription Subscription($chatId: String!) {
+    onMessageCreated(chatId: $chatId) {
+      content
+      userId
+      chatId
+      createAt
+      id
+    }
+  }
+`;
+
 export const CREATE_CHAT = gql`
   mutation Mutation($data: CreateChatInput!) {
     createChat(data: $data) {
@@ -38,6 +50,7 @@ export const SEND_MESSAGE = gql`
       content
       userId
       createAt
+      chatId
       id
     }
   }
@@ -48,6 +61,7 @@ export const GET_MESSAGES = gql`
     messages(chatId: $chatId) {
       content
       userId
+      chatId
       createAt
       id
     }
