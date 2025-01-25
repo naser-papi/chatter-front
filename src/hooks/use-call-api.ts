@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import type { ErrorType, IAPIInfo } from "@/types/base";
 import { mainAPICall } from "@/helpers/utils";
 import { useState } from "react";
-import useAlert from "@/hooks/use-alert.tsx";
+import useAlert from "@/hooks/use-alert";
 
 const useCallApi = () => {
   const [isLoading, setIsLoading] = useState(false);
