@@ -1,5 +1,5 @@
 import { MessageDto } from "@/dto/chat";
-import { GET_MESSAGES } from "@/constants/graphql-query";
+import { CHATS, GET_MESSAGES } from "@/constants/graphql-query";
 import { ApolloCache } from "@apollo/client";
 
 export function updateMessagesCache(
@@ -14,6 +14,10 @@ export function updateMessagesCache(
     },
   });
 
+  const existingChats: any = cache.readQuery({
+    query: CHATS,
+  });
+
   // Update the cache with the new message
   cache.writeQuery({
     query: GET_MESSAGES,
@@ -24,4 +28,20 @@ export function updateMessagesCache(
       messages: (existingMessages?.messages || []).concat(newMessage), // Append the new message
     },
   });
+
+  // Update the lastMessage property of the corresponding chat in existingChats
+  if (existingChats?.chats) {
+    const updatedChats = existingChats.chats.map((chat: any) =>
+      chat.id === newMessage.chatId
+        ? { ...chat, lastMessage: newMessage.content }
+        : chat,
+    );
+
+    cache.writeQuery({
+      query: CHATS,
+      data: {
+        chats: updatedChats,
+      },
+    });
+  }
 }

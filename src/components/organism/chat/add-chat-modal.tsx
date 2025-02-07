@@ -17,7 +17,9 @@ const AddChatModal = () => {
   >(CREATE_CHAT, {
     update(cache, { data }) {
       if (data?.createChat) {
-        const newChat = data.createChat;
+        const newChat = {
+          ...data.createChat,
+        };
 
         // Read the existing chats from the cache
         const existingChats: any = cache.readQuery({

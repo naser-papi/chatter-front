@@ -39,7 +39,7 @@ const ChatItem = ({
                   variant="body2"
                   sx={{ color: "text.primary", display: "inline" }}
                 >
-                  {sender}
+                  {sender + ": "}
                 </Typography>
                 {message}
               </>

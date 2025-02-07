@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const ON_MESSAGE_CREATED = gql`
-  subscription Subscription($chatId: String!) {
-    onMessageCreated(chatId: $chatId) {
+  subscription Subscription($chatIds: [String!]!) {
+    onMessageCreated(chatIds: $chatIds) {
       content
       userId
       chatId
@@ -19,17 +19,27 @@ export const CREATE_CHAT = gql`
       name
       userIds
       id
+      lastMessage {
+        content
+        createAt
+        userId
+      }
     }
   }
 `;
 
 export const CHATS = gql`
-  query {
-    chats {
+  query Query($skip: Int!, $limit: Int!) {
+    chats(skip: $skip, limit: $limit) {
       isPrivate
       name
       id
       userIds
+      lastMessage {
+        content
+        createAt
+        userId
+      }
     }
   }
 `;

@@ -15,6 +15,7 @@ const useCallQuery = <TData, TVariables extends OperationVariables>(
     data,
     error: gqlError,
     loading,
+    fetchMore,
   } = useQuery<TData>(query, { variables, skip });
   const [error, setError] = useState<ErrorType>(null);
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ const useCallQuery = <TData, TVariables extends OperationVariables>(
     }
   }, [gqlError]);
 
-  return [data, error, loading] as const;
+  return [data, error, loading, fetchMore] as const;
 };
 
 export default useCallQuery;

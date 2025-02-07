@@ -4,6 +4,7 @@ export interface ChatItemDto extends BaseDto {
   isPrivate: boolean;
   name?: string;
   userIds?: string[];
+  lastMessage?: MessageDto;
 }
 
 export interface CreateChatDto extends BaseDto {

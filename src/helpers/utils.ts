@@ -127,7 +127,7 @@ export async function mainAPICall<T>(
     } else {
       const res = await resp.json();
       return {
-        status: res.status,
+        status: resp.status,
         error:
           (res.message as string) ||
           (res.error as string) ||

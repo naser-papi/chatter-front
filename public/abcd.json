@@ -1,0 +1,14 @@
+{
+  "room_occupied": "True",
+  "people_count": 3,
+  "normalized_latest_human_positions": [
+    "(0.4",
+    "0.3)",
+    "(0.4",
+    "0.6)"
+  ],
+  "human_detection_source": [
+    "radar",
+    "camera"
+  ]
+}
