@@ -25,7 +25,7 @@ const MessageList = () => {
       skip: 0,
       limit: PAGE_COUNT,
     },
-    !currentChatId || messageCount === 0,
+    !currentChatId,
   );
 
   useEffect(() => {
@@ -47,10 +47,12 @@ const MessageList = () => {
     }
   }, [messagesError]);
   useEffect(() => {
-    listRef.current?.scrollTo({
-      top: listRef.current?.scrollHeight,
-      behavior: "smooth",
-    });
+    if (messages && messages.messages.length <= PAGE_COUNT) {
+      listRef.current?.scrollTo({
+        top: listRef.current?.scrollHeight,
+        behavior: "smooth",
+      });
+    }
   }, [messages?.messages, listRef.current]);
   if (!currentChatId) return null;
   return (
@@ -62,6 +64,7 @@ const MessageList = () => {
           pageStart={0}
           hasMore={messages.messages.length < messageCount}
           useWindow={false}
+          isReverse
           loadMore={() =>
             fetchMore({ variables: { skip: messages!.messages.length } })
           }

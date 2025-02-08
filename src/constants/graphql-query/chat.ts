@@ -5,6 +5,9 @@ export const ON_MESSAGE_CREATED = gql`
     onMessageCreated(chatIds: $chatIds) {
       content
       userId
+      user {
+        email
+      }
       chatId
       createAt
       id
@@ -20,9 +23,13 @@ export const CREATE_CHAT = gql`
       userIds
       id
       lastMessage {
+        id
         content
         createAt
         userId
+        user {
+          email
+        }
       }
     }
   }
@@ -36,6 +43,7 @@ export const CHATS = gql`
       id
       userIds
       lastMessage {
+        id
         content
         createAt
         user {
@@ -60,6 +68,9 @@ export const SEND_MESSAGE = gql`
   mutation Mutation($data: CreateMessageInput!) {
     createMessage(data: $data) {
       content
+      user {
+        email
+      }
       userId
       createAt
       chatId

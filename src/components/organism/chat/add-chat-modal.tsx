@@ -7,9 +7,11 @@ import { useAlert, useCallMutation } from "@/hooks";
 import { ChatItemDto, CreateChatDto } from "@/dto/chat";
 import { CHATS, CREATE_CHAT } from "@/constants/graphql-query";
 import { getErrorListFromAPIError } from "@/helpers/utils";
+import { PAGE_COUNT } from "@/constants";
 
 const AddChatModal = () => {
-  const { showAddModal, onCancelNewChat } = useContext(ChatsContext);
+  const { showAddModal, onCancelNewChat, onNewChatCreated } =
+    useContext(ChatsContext);
 
   const [createChat, createdChat, createError] = useCallMutation<
     CreateChatDto,
@@ -24,11 +26,19 @@ const AddChatModal = () => {
         // Read the existing chats from the cache
         const existingChats: any = cache.readQuery({
           query: CHATS,
+          variables: {
+            skip: 0,
+            limit: PAGE_COUNT,
+          },
         });
 
         // Update the cache with the new chat
         cache.writeQuery({
           query: CHATS,
+          variables: {
+            skip: 0,
+            limit: PAGE_COUNT,
+          },
           data: {
             ...existingChats,
             chats: [newChat, ...existingChats.chats], // Prepend or append as needed
@@ -55,8 +65,7 @@ const AddChatModal = () => {
 
   useEffect(() => {
     if (createdChat) {
-      //setList([createdChat.createChat, ...list]);
-      onCancelNewChat();
+      onNewChatCreated(createdChat);
     }
   }, [createdChat]);
 

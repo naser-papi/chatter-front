@@ -1,11 +1,13 @@
 import { createContext, useCallback, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { CreateChatDto } from "@/dto/chat";
 
 interface ChatsContextProps {
   showAddModal: boolean;
   onShowAddModal: () => void;
   onCancelNewChat: () => void;
   onChatItemClick: (id: string) => void;
+  onNewChatCreated: (newChat: CreateChatDto) => void;
   currentChatId: string | null;
 }
 
@@ -32,6 +34,12 @@ export const ChatsProvider = ({ children }: ChatsProviderProps) => {
     setShowAddModal(false);
   }, []);
 
+  const onNewChatCreated = (newChat: CreateChatDto) => {
+    onCancelNewChat();
+    setCurrentChatId(newChat.createChat.id!);
+    navigate(`/chats/${newChat.createChat.id}`);
+  };
+
   const onChatItemClick = useCallback((id: string) => {
     setCurrentChatId(id);
     navigate(`/chats/${id}`);
@@ -44,6 +52,7 @@ export const ChatsProvider = ({ children }: ChatsProviderProps) => {
         onCancelNewChat,
         onChatItemClick,
         currentChatId,
+        onNewChatCreated,
       }}
     >
       {children}

@@ -31,6 +31,18 @@ const splitLink = split(
   httpLink,
 );
 
+function merge(
+  existingItems: unknown[],
+  incomingItems: unknown[],
+  { args }: any,
+) {
+  const merged = existingItems ? existingItems.slice(0) : [];
+  for (let i = 0; i < incomingItems.length; i++) {
+    merged[args.skip + i] = incomingItems[i];
+  }
+  return merged;
+}
+
 const apolloClient = new ApolloClient({
   cache: new InMemoryCache({
     typePolicies: {
@@ -38,13 +50,11 @@ const apolloClient = new ApolloClient({
         fields: {
           chats: {
             keyArgs: false,
-            merge(existingChats, incomingChats, { args }: any) {
-              const merged = existingChats ? existingChats.slice(0) : [];
-              for (let i = 0; i < incomingChats.length; i++) {
-                merged[args.skip + i] = incomingChats[i];
-              }
-              return merged;
-            },
+            merge,
+          },
+          messages: {
+            keyArgs: ["chatId"],
+            merge,
           },
         },
       },
