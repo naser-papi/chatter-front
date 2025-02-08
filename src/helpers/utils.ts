@@ -1,4 +1,4 @@
-import { ErrorType, IAPIInfo, IAPIResponse } from "@/types/base";
+import { ErrorType, IAPIInfo, IAPIResponse, IParams } from "@/types/base";
 import { ApolloError, ReactiveVar } from "@apollo/client";
 
 export function formatMessageDateTime(fullDate?: Date | string): string {
@@ -57,6 +57,34 @@ export function updateReactiveVar<T>(
   });
 }
 
+export function replaceParams(urlTemplate: string, params: IParams): string {
+  // Regular expression to match placeholder patterns like {param1}, {param2}, etc.
+  const regex = /{([^}]+)}/g;
+
+  // Replace each placeholder in the URL template with the corresponding value from the params object
+  return urlTemplate.replace(regex, (match, paramName) => {
+    // Check if the paramName exists in the params object
+    if (Object.prototype.hasOwnProperty.call(params, paramName)) {
+      // If the paramName exists, replace the placeholder with its corresponding value
+      return params[paramName].toString();
+    } else {
+      // If paramName doesn't exist in params, return the original placeholder
+      return match;
+    }
+  });
+}
+
+export function addQueryParamsToUrl(url: string, queryParams: IParams): string {
+  const urlObject = new URL(url, "http://example.com"); // Base URL for parsing
+
+  for (const [key, value] of Object.entries(queryParams)) {
+    urlObject.searchParams.append(key, value.toString());
+  }
+  console.log("urlObject", urlObject);
+  // Remove the base and return the constructed URL without the leading slash
+  return urlObject.pathname.slice(1) + urlObject.search;
+}
+
 export function getErrorListFromAPIError(error: ErrorType) {
   if (!error) return [];
   const isArray = Array.isArray(error);
@@ -98,7 +126,14 @@ export function getApolloErrorList(error: ApolloError): string[] | string {
   return [];
 }
 export async function coreAPICall(info: IAPIInfo, token = "") {
-  const fullURL = import.meta.env.VITE_REST_API_SERVER + "/" + info.url;
+  let normalizeUrl = info.params
+    ? replaceParams(info.url, info.params)
+    : info.url;
+  normalizeUrl = info.query
+    ? addQueryParamsToUrl(normalizeUrl, info.query)
+    : normalizeUrl;
+
+  const fullURL = import.meta.env.VITE_REST_API_SERVER + "/" + normalizeUrl;
   const options = {
     method: info.method,
     credentials: "include",

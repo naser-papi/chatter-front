@@ -23,6 +23,9 @@ const useCallApi = () => {
         if (resp.status == 403) {
           navigate("/forbidden");
         }
+        if (resp.status == 404) {
+          showAlert(resp.error!, "error");
+        }
         if (resp.status == 500) {
           showAlert(resp.error!, "error");
         }

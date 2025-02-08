@@ -9,3 +9,7 @@ export interface LoginDto {
   email: string;
   password: string;
 }
+
+export interface UserDto {
+  email: string;
+}

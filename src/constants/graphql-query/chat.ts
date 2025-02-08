@@ -38,7 +38,9 @@ export const CHATS = gql`
       lastMessage {
         content
         createAt
-        userId
+        user {
+          email
+        }
       }
     }
   }
@@ -67,10 +69,12 @@ export const SEND_MESSAGE = gql`
 `;
 
 export const GET_MESSAGES = gql`
-  query Query($chatId: String!) {
-    messages(chatId: $chatId) {
+  query Query($chatId: String!, $skip: Int!, $limit: Int!) {
+    messages(chatId: $chatId, skip: $skip, limit: $limit) {
       content
-      userId
+      user {
+        email
+      }
       chatId
       createAt
       id

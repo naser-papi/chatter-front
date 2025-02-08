@@ -6,13 +6,15 @@ import clsx from "clsx";
 const ChatBox = () => {
   return (
     <List
+      component="aside"
       className={clsx(
         css`
           width: 100%;
           height: 100%;
           background: rgba(5, 1, 0, 0.99);
-          max-height: calc(100% - 1px);
+          display: grid;
           overflow-y: auto;
+          grid-template-rows: 80px 2px auto;
         `,
         "scrollbar-dark",
       )}
@@ -21,7 +23,14 @@ const ChatBox = () => {
         <AddChatButton />
       </Toolbar>
       <Divider />
-      <ChatList />
+      <div
+        className={css`
+          max-height: calc(100% - 1px);
+          overflow-y: auto;
+        `}
+      >
+        <ChatList />
+      </div>
     </List>
   );
 };

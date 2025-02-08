@@ -15,21 +15,17 @@ import { ChatPath } from "@/constants";
 import { getErrorListFromAPIError } from "@/helpers/utils";
 import EmptyBox from "@/components/molecule/empty-box";
 import { updateMessagesCache } from "@/helpers/messages";
-import { PaginationDto } from "@/dto/base";
+import { PAGE_COUNT } from "@/constants/base";
 
 const ChatList = () => {
   const { onChatItemClick, currentChatId } = useContext(ChatsContext);
   const { showAlert } = useAlert();
   const [callRestAPI] = useCallApi();
-  const [pageInfo, setPageInfo] = useState<PaginationDto>({
-    skip: 0,
-    limit: 5,
-    count: 0,
-  });
+  const [chatCount, setChatCount] = useState<number>(0);
   const [chatList, listError, listPending, fetchMore] = useCallQuery<
     ChatListDto,
     { skip: number; limit: number }
-  >(CHATS, { skip: 0, limit: 5 }, pageInfo.count === 0);
+  >(CHATS, { skip: 0, limit: PAGE_COUNT }, chatCount === 0);
 
   const [] = useCallSubscription<
     { onMessageCreated: MessageDto },
@@ -58,10 +54,7 @@ const ChatList = () => {
       const resp = await callRestAPI<number | string>(apiInfo);
       if (resp) {
         console.log("count", resp);
-        setPageInfo({
-          ...pageInfo,
-          count: Number(resp),
-        });
+        setChatCount(Number(resp));
       }
     })();
   }, []);
@@ -73,7 +66,7 @@ const ChatList = () => {
       {chatList?.chats?.length && (
         <InfiniteScroll
           pageStart={0}
-          hasMore={pageInfo.count > chatList!.chats.length}
+          hasMore={chatCount > chatList!.chats.length}
           loadMore={() =>
             fetchMore({ variables: { skip: chatList!.chats.length } })
           }
@@ -86,7 +79,7 @@ const ChatList = () => {
                 <ChatItem
                   onClick={() => onChatItemClick(chat.id!)}
                   message={chat.lastMessage?.content || "-"}
-                  sender={chat.lastMessage?.userId?.slice(-2) || "NP"}
+                  sender={chat.lastMessage?.user?.email.slice(0, 2) || "NP"}
                   avatar={"NP"}
                   title={chat.name || "title"}
                   selected={currentChatId === chat.id}

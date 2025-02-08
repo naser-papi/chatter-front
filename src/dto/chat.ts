@@ -1,4 +1,5 @@
 import { BaseDto } from "@/dto/base";
+import { UserDto } from "@/dto/auth";
 
 export interface ChatItemDto extends BaseDto {
   isPrivate: boolean;
@@ -23,6 +24,7 @@ export interface MessageDto {
   content: string;
   chatId: string;
   userId?: string;
+  user?: UserDto;
   createAt?: string;
   id?: string;
 }

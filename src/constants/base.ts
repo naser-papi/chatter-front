@@ -15,3 +15,5 @@ export const UserPages = [
     href: "/login",
   },
 ];
+
+export const PAGE_COUNT = 15;
