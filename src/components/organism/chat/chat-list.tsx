@@ -73,21 +73,19 @@ const ChatList = () => {
           useWindow={false}
           loader={<Loading show={true} />}
         >
-          {chatList!.chats
-            .map((chat, index) => (
-              <Fragment key={index}>
-                <ChatItem
-                  onClick={() => onChatItemClick(chat.id!)}
-                  message={chat.lastMessage?.content || "-"}
-                  sender={chat.lastMessage?.user?.email.slice(0, 2) || "NP"}
-                  avatar={"NP"}
-                  title={chat.name || "title"}
-                  selected={currentChatId === chat.id}
-                />
-                <Divider variant="inset" />
-              </Fragment>
-            ))
-            .reverse()}
+          {chatList!.chats.map((chat, index) => (
+            <Fragment key={index}>
+              <ChatItem
+                onClick={() => onChatItemClick(chat.id!)}
+                message={chat.lastMessage?.content || "-"}
+                sender={chat.lastMessage?.user?.email.slice(0, 2) || "NP"}
+                avatar={"NP"}
+                title={chat.name || "title"}
+                selected={currentChatId === chat.id}
+              />
+              <Divider variant="inset" />
+            </Fragment>
+          ))}
         </InfiniteScroll>
       )}
     </>
