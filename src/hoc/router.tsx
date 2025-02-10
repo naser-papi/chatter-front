@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-import AuthPage from "../pages/auth-page.tsx";
-import HomePage from "@/pages/home-page.tsx";
+import AuthPage from "../pages/auth-page";
+import HomePage from "@/pages/home-page";
 
 const router = createBrowserRouter([
   {
