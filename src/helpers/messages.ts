@@ -25,7 +25,7 @@ export function updateMessagesCache(
     },
   });
 
-  // Update the cache with the new message
+  //Update the cache with the new message
   cache.writeQuery({
     query: GET_MESSAGES,
     variables: {
