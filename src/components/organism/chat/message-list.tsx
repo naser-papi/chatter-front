@@ -76,12 +76,7 @@ const MessageList = () => {
                 new Date(msgB.createAt!).getTime(),
             )
             .map((msg) => (
-              <Message
-                key={msg.id}
-                content={msg.content}
-                createAt={msg.createAt}
-                id={msg.id}
-              />
+              <Message {...msg} key={msg.id} />
             ))}
         </InfiniteScroll>
       )}

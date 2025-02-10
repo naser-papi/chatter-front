@@ -5,10 +5,9 @@ import Avatar from "@mui/material/Avatar";
 import { Paper, Stack } from "@mui/material";
 import Typography from "@mui/material/Typography";
 
-interface MessageProps
-  extends Pick<MessageDto, "id" | "content" | "createAt"> {}
+interface MessageProps extends MessageDto {}
 
-const Message = ({ content, createAt }: MessageProps) => {
+const Message = ({ content, createAt, user }: MessageProps) => {
   return (
     <Grid container spacing={2}>
       <Grid size={1}>
