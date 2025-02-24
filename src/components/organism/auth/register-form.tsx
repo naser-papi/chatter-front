@@ -9,10 +9,10 @@ const RegisterForm = () => {
     <>
       <TextField
         type={"text"}
-        name={"name"}
+        name={"fullName"}
         label={"Full Name"}
         variant={"outlined"}
-        onChange={(e) => setData({ ...data, name: e.target.value })}
+        onChange={(e) => setData({ ...data, fullName: e.target.value })}
       />
       <TextField
         type={"email"}

@@ -3,6 +3,7 @@ import { BaseDto } from "./base";
 export interface CreateUserDto extends BaseDto {
   email: string;
   password: string;
+  fullName: string;
 }
 
 export interface LoginDto {

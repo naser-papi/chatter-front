@@ -16,7 +16,7 @@ import { getErrorListFromAPIError } from "@/helpers/utils";
 interface AuthContextProps {
   mode: "login" | "register";
   data: {
-    name?: string;
+    fullName?: string;
     email?: string;
     password?: string;
     repeatPassword?: string;
@@ -71,7 +71,12 @@ export const AuthProvider = ({
     return true;
   };
   const validateRegisterData = () => {
-    if (!data.name || !data.email || !data.password || !data.repeatPassword) {
+    if (
+      !data.fullName ||
+      !data.email ||
+      !data.password ||
+      !data.repeatPassword
+    ) {
       showAlert(
         "Please enter name, email, password and repeat password",
         "error",
@@ -104,6 +109,7 @@ export const AuthProvider = ({
     await registerUser({
       variables: {
         data: {
+          fullName: data.fullName!,
           email: data.email!,
           password: data.password!,
         },

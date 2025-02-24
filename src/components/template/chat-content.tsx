@@ -11,17 +11,18 @@ const ChatContent = () => {
           padding: 1rem 1rem 60px;
           position: relative;
           overflow: hidden;
-
           .message-list {
-            display: flex;
-            flex-flow: column;
-            row-gap: 12px;
             box-sizing: border-box;
             max-height: calc(100% - 80px);
             overflow-y: auto;
             height: 100%;
             position: relative;
             padding-bottom: 1rem;
+          }
+          .message-list .items {
+            display: flex;
+            flex-flow: column;
+            row-gap: 12px;
           }
 
           .chat-message-box {

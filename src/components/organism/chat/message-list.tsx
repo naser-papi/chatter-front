@@ -65,6 +65,7 @@ const MessageList = () => {
           hasMore={messages.messages.length < messageCount}
           useWindow={false}
           isReverse
+          className={"items"}
           loadMore={() =>
             fetchMore({ variables: { skip: messages!.messages.length } })
           }
