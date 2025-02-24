@@ -30,7 +30,7 @@ const AddChatModal = () => {
             skip: 0,
             limit: PAGE_COUNT,
           },
-        });
+        }) || { chats: [] };
 
         // Update the cache with the new chat
         cache.writeQuery({

@@ -7,6 +7,7 @@ export const ON_MESSAGE_CREATED = gql`
       userId
       user {
         email
+        fullName
       }
       chatId
       createAt
@@ -22,15 +23,6 @@ export const CREATE_CHAT = gql`
       name
       userIds
       id
-      lastMessage {
-        id
-        content
-        createAt
-        userId
-        user {
-          email
-        }
-      }
     }
   }
 `;
@@ -48,6 +40,7 @@ export const CHATS = gql`
         createAt
         user {
           email
+          fullName
         }
       }
     }
@@ -70,6 +63,7 @@ export const SEND_MESSAGE = gql`
       content
       user {
         email
+        fullName
       }
       userId
       createAt
@@ -85,6 +79,7 @@ export const GET_MESSAGES = gql`
       content
       user {
         email
+        fullName
       }
       chatId
       createAt

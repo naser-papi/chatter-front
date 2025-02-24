@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
@@ -7,9 +7,16 @@ import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { UserPages } from "@/constants/base";
+import { useAlert, useCallQuery } from "@/hooks";
+import { ME } from "@/constants/graphql-query/auth";
+import { UserDto } from "@/dto/auth";
+import { getErrorListFromAPIError } from "@/helpers/utils";
+import { css } from "@emotion/css";
 
 const UserMenu = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const { showAlert } = useAlert();
+  const [userInfo, getUserInfoError] = useCallQuery<{ me: UserDto }, {}>(ME);
   const navigate = useNavigate();
   const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -18,11 +25,21 @@ const UserMenu = () => {
     setAnchorElUser(null);
   };
 
+  useEffect(() => {
+    if (getUserInfoError) {
+      const message = getErrorListFromAPIError(getUserInfoError);
+      showAlert(message, "error");
+    }
+  }, [getUserInfoError]);
+
   return (
     <>
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+          <Avatar
+            alt={userInfo?.me.fullName}
+            src="/static/images/avatar/2.jpg"
+          />
         </IconButton>
       </Tooltip>
       <Menu
@@ -41,6 +58,16 @@ const UserMenu = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
+        <Typography
+          variant={"subtitle1"}
+          borderBottom={1}
+          gutterBottom
+          className={css`
+            padding: 8px;
+          `}
+        >
+          {userInfo?.me.fullName}
+        </Typography>
         {UserPages.map((page, index) => (
           <MenuItem
             key={index}

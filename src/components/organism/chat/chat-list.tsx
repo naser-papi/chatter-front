@@ -77,10 +77,10 @@ const ChatList = () => {
             <Fragment key={index}>
               <ChatItem
                 onClick={() => onChatItemClick(chat.id!)}
-                message={chat.lastMessage?.content || "-"}
-                sender={chat.lastMessage?.user?.email.slice(0, 2) || "NP"}
-                avatar={"NP"}
-                title={chat.name || "title"}
+                message={chat.lastMessage?.content || null}
+                sender={chat.lastMessage?.user?.fullName.slice(0, 2) || ""}
+                avatar={chat.lastMessage?.user?.fullName || ""}
+                title={chat.name || "no name"}
                 selected={currentChatId === chat.id}
               />
               <Divider variant="inset" />

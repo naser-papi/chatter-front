@@ -12,7 +12,8 @@ const Message = ({ content, createAt, user }: MessageProps) => {
   return (
     <Grid container spacing={2}>
       <Grid size={1}>
-        <Avatar src={""} sx={{ width: 42, height: 42 }} />
+        <Avatar src={""} alt={user?.fullName} sx={{ width: 42, height: 42 }} />
+        <Typography variant={"caption"}>{user?.fullName}</Typography>
       </Grid>
       <Grid size={11}>
         <Stack

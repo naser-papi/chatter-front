@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import { ListItemButton } from "@mui/material";
 
 interface ChatItemProps {
-  message: string;
+  message: string | null;
   sender: string;
   avatar: string;
   title: string;
@@ -28,21 +28,23 @@ const ChatItem = ({
       <ListItem alignItems="flex-start" disablePadding>
         <ListItemButton onClick={onClick} selected={selected}>
           <ListItemAvatar>
-            <Avatar alt="Remy Sharp" src={avatar} />
+            <Avatar alt={sender} src={avatar} />
           </ListItemAvatar>
           <ListItemText
             primary={title}
             secondary={
-              <>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ color: "text.primary", display: "inline" }}
-                >
-                  {sender + ": "}
-                </Typography>
-                {message}
-              </>
+              message ? (
+                <>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    sx={{ color: "text.primary", display: "inline" }}
+                  >
+                    {sender + ": "}
+                  </Typography>
+                  {message}
+                </>
+              ) : null
             }
           />
         </ListItemButton>
