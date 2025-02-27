@@ -38,7 +38,7 @@ const UserMenu = () => {
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar
             alt={userInfo?.me.fullName}
-            src="/static/images/avatar/2.jpg"
+            src={`${userInfo?.me.avatarUrl || "/static/images/avatar/2.jpg"}`}
           />
         </IconButton>
       </Tooltip>

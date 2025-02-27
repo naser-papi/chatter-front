@@ -14,4 +14,9 @@ export const AuthPath = {
     url: "auth/logout",
     method: "POST",
   },
+  updateProfile: {
+    url: "users/update-profile",
+    method: "PUT",
+    body: null as FormData | null,
+  },
 } satisfies { [key: string]: IAPIInfo };

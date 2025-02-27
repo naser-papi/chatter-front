@@ -134,6 +134,19 @@ export async function coreAPICall(info: IAPIInfo, token = "") {
     : normalizeUrl;
 
   const fullURL = import.meta.env.VITE_REST_API_SERVER + "/" + normalizeUrl;
+  if (info.body instanceof FormData) {
+    /*When using the fetch method with FormData, you don't need to manually set the Content-Type header to multipart/form-data. The browser automatically sets the appropriate Content-Type boundary for FormData objects. Setting it manually would override this boundary, leading to issues with the request.*/
+    return await fetch(fullURL, {
+      method: info.method,
+      body: info.body,
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        Authorization: info.tokenLess || !token ? "" : `Bearer ${token}`,
+      },
+    });
+  }
+
   const options = {
     method: info.method,
     credentials: "include",
@@ -144,6 +157,7 @@ export async function coreAPICall(info: IAPIInfo, token = "") {
     },
     body: info.method !== "GET" ? JSON.stringify(info.body) : null,
   } as RequestInit;
+
   return await fetch(fullURL, options);
 }
 

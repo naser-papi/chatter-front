@@ -14,4 +14,5 @@ export interface LoginDto {
 export interface UserDto {
   email: string;
   fullName: string;
+  avatarUrl?: string;
 }

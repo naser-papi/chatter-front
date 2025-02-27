@@ -7,8 +7,8 @@ export const Pages = [
 
 export const UserPages = [
   {
-    title: "Account",
-    href: "/account",
+    title: "Profile",
+    href: "/profile",
   },
   {
     title: "Logout",
