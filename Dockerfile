@@ -1,7 +1,14 @@
 # Stage 1: Install dependencies and build the app
 FROM node:20.11.1-alpine AS builder
 
+ARG VITE_BACKEND_URL
+ARG VITE_BACKEND_WS
+ARG VITE_REST_API_SERVER
+
 ENV NODE_ENV=development
+ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
+ENV VITE_BACKEND_WS=$VITE_BACKEND_WS
+ENV VITE_REST_API_SERVER=$VITE_REST_API_SERVER
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
