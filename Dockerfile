@@ -12,7 +12,7 @@ RUN npm install -g pnpm && pnpm fetch
 COPY . ./
 
 # Install dependencies based on lockfile from cache
-RUN pnpm install --offline
+RUN pnpm install --offline --prod=false
 
 # Build the Vite application for production
 RUN pnpm build
