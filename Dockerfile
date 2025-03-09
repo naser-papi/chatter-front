@@ -43,7 +43,7 @@ RUN rm -rf ./*
 COPY --from=builder /app/dist ./
 
 # Copy custom Nginx configuration, if needed (optional)
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 80
 EXPOSE 80
