@@ -7,6 +7,9 @@ WORKDIR /app
 # Copy package manager lock files and install dependencies
 COPY pnpm-lock.yaml ./
 RUN npm install -g pnpm && pnpm fetch
+RUN npm install -g vite
+RUN npm typescript -g vite
+
 
 # Copy the application code to the container
 COPY . ./
