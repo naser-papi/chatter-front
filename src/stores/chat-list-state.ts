@@ -1,5 +1,5 @@
 import { makeVar } from "@apollo/client";
-import { IChatListState } from "@/types/state-management.ts";
+import { IChatListState } from "@/types/state-management";
 
 const ChatListState = makeVar<IChatListState>({
   isPrivate: false,

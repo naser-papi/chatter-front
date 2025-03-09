@@ -4,7 +4,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import { MouseEvent, useState } from "react";
-import { Pages } from "@/constants/base.ts";
+import { Pages } from "@/constants/base";
 
 const MobileMenu = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);

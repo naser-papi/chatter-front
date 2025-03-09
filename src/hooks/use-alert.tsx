@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom/client";
 import { Alert, AlertTitle, Snackbar } from "@mui/material";
 import { css } from "@emotion/css";
-import { AlertType } from "@/types/base.ts";
+import { AlertType } from "@/types/base";
 
 const useAlert = () => {
   const showAlert = (message: string | string[], type: AlertType) => {
