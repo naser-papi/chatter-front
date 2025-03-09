@@ -1,5 +1,5 @@
 # Stage 1: Install dependencies and build the app
-FROM node:20.11.1-alpine AS builder
+FROM node:20.11.1-alpine AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -30,7 +30,7 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 
 # Copy built files from the previous stage
-COPY --from=builder /app/dist ./
+COPY --from=build /app/dist ./
 
 # Copy custom Nginx configuration, if needed (optional)
 # COPY nginx.conf /etc/nginx/conf.d/default.conf
