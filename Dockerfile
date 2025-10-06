@@ -1,5 +1,6 @@
 # ---------- Build stage ----------
 FROM node:20-alpine AS build
+RUN corepack enable && corepack prepare pnpm@latest --activate
 WORKDIR /app
 COPY pnpm-lock.yaml ./
 COPY package.json ./
