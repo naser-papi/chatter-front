@@ -44,10 +44,10 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          #          build-args: |
-          #            MONGO_URI=${{ secrets.MONGO_URI }}
-          #            PORT=${{ secrets.PORT }}
-          #            DB_NAME=${{ secrets.DB_NAME }}
+          build-args: |
+            VITE_BACKEND_URL=${{ secrets.VITE_BACKEND_URL }}
+            VITE_BACKEND_WS=${{ secrets.VITE_BACKEND_WS }}
+            VITE_REST_API_SERVER=${{ secrets.VITE_REST_API_SERVER }}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:cache
           cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:cache,mode=max
 
