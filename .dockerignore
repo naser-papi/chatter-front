@@ -20,3 +20,14 @@ psd
 thumb
 sketch
 
+npm-debug.log*
+dist
+build
+coverage
+.env*
+.git
+.gitignore
+.DS_Store
+
+
+
