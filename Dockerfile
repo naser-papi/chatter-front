@@ -47,7 +47,7 @@ server {
 NGINX
 
 # Copy build artifacts
-ARG BUILD_DIR=build
+ARG BUILD_DIR=dist
 COPY --from=build /app/${BUILD_DIR} /usr/share/nginx/html
 
 EXPOSE 80
