@@ -5,3 +5,8 @@
 # Front-End Code By Vite+React+MaterialUI
 
 > **Note**: Under development.
+
+
+Subjects:
+
+1- How to deploy on VPS
