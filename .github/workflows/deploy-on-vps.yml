@@ -1,4 +1,4 @@
-name: Deploy Chatter UI to VPS
+name: Deploy Chatter UI to VPS to the new VPS
 
 on:
   push:
