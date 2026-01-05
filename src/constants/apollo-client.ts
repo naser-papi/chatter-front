@@ -16,7 +16,10 @@ const httpLink = createHttpLink({
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: import.meta.env.VITE_BACKEND_WS,
+    url: import.meta.env.VITE_BACKEND_WS,    
+    lazy: true,          // 👈 don’t connect until needed
+    retryAttempts: 5,    // 👈 basic retry
+    shouldRetry: () => true,
   }),
 );
 

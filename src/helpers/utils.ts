@@ -139,7 +139,7 @@ export async function coreAPICall(info: IAPIInfo, token = "") {
     return await fetch(fullURL, {
       method: info.method,
       body: info.body,
-      credentials: "include",
+      credentials: "include", // 👈 critical for cookie auth
       headers: {
         Accept: "application/json",
         Authorization: info.tokenLess || !token ? "" : `Bearer ${token}`,
