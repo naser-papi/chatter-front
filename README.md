@@ -75,55 +75,6 @@ src/
    - Hot module replacement with Vite
    - TypeScript strict mode for better code quality
 
-### ⚠️ Areas for Improvement
-
-1. **Testing**
-   - ❌ No test files found (unit, integration, or E2E tests)
-   - **Recommendation**: Add Jest/Vitest + React Testing Library for component tests
-   - **Recommendation**: Add Playwright or Cypress for E2E testing
-
-2. **Error Handling**
-   - Some inconsistent error handling patterns
-   - Console.log statements in production code (e.g., `chat-list.tsx:56`, `utils.ts:83`)
-   - **Recommendation**: Implement centralized error logging service
-   - **Recommendation**: Remove console.log statements or use proper logging library
-
-3. **Documentation**
-   - Missing environment variable documentation
-   - No API documentation
-   - **Recommendation**: Add `.env.example` file with required variables
-   - **Recommendation**: Document GraphQL schema and REST endpoints
-
-4. **Performance**
-   - No performance monitoring or analytics
-   - Infinite scroll implementation could benefit from virtualization for large lists
-   - **Recommendation**: Add React DevTools Profiler integration
-   - **Recommendation**: Consider `react-window` or `react-virtualized` for chat lists
-
-5. **Accessibility**
-   - No explicit accessibility considerations documented
-   - **Recommendation**: Add ARIA labels and keyboard navigation support
-   - **Recommendation**: Run Lighthouse audits and address accessibility issues
-
-6. **State Management**
-   - Mix of Context API and Apollo reactive variables
-   - **Recommendation**: Document when to use each approach
-   - **Recommendation**: Consider Zustand or Jotai for simpler global state if needed
-
-7. **Code Quality**
-   - Some type assertions (`as const`, `as any`) could be improved
-   - Missing JSDoc comments for complex functions
-   - **Recommendation**: Add JSDoc comments for public APIs
-   - **Recommendation**: Reduce use of `any` types
-
-8. **CI/CD**
-   - No visible CI/CD pipeline configuration
-   - **Recommendation**: Add GitHub Actions or similar for automated testing and deployment
-
-9. **Security**
-   - Credentials included in requests (`credentials: "include"`)
-   - **Recommendation**: Document CORS and cookie security settings
-   - **Recommendation**: Add Content Security Policy headers
 
 ## 🚦 Getting Started
 
@@ -279,27 +230,24 @@ The application is containerized with Docker and uses Nginx for serving static f
 - Static asset caching (30 days)
 - Health check endpoint (`/health`)
 
-## 📝 Development Roadmap
 
-### Immediate Priorities
-1. Add comprehensive test coverage
-2. Remove console.log statements
-3. Add environment variable documentation
-4. Implement error logging service
-
-### Short-term
-1. Add Storybook for component documentation
-2. Implement accessibility improvements
-3. Add performance monitoring
-4. Set up CI/CD pipeline
-
-### Long-term
-1. Consider virtualization for large lists
-2. Add PWA support
-3. Implement offline functionality
-4. Add internationalization (i18n)
 
 ## 🤝 Contributing
+
+Contributions are welcome 🎉
+
+**Fork the repo**
+
+Create a feature branch: `feat/<name>` or `fix/<name>`
+
+Open a PR with a clear description and screenshots/logs when relevant
+
+**Good first contributions**
+
+- UI/UX refinements
+- Improving real-time UX edge cases
+- Tests
+- Documentation updates
 
 This project follows best practices for React and TypeScript development. When contributing:
 
@@ -308,6 +256,9 @@ This project follows best practices for React and TypeScript development. When c
 3. Run linting before committing: `pnpm lint`
 4. Write tests for new features
 5. Update documentation as needed
+
+
+
 
 ## 📄 License
 
@@ -325,12 +276,13 @@ This project is licensed under the **MIT License** - a permissive open-source li
 - Include the original copyright notice and license text
 - Include a copy of the MIT License in distributions
 
-### Full License Text
+
+## Full License Text
 
 ```
 MIT License
 
-Copyright (c) 2024 Chatter UI Contributors
+Copyright (c) 2026 Naser Papi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -349,6 +301,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
 ```
 
 For more information, see the [LICENSE](LICENSE) file in the repository root.
@@ -357,4 +310,5 @@ For more information, see the [LICENSE](LICENSE) file in the repository root.
 
 **Status**: 🟡 Under Active Development
 
-**Last Updated**: 2024
+**Last Updated** Jan 2026
+
